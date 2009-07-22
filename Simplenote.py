@@ -17,7 +17,7 @@ class ApiError(Exception):
     self.message = message
 
 def mkdatetime(time_str):
-  return datetime.strptime(time_str.split('.')[0], "%Y-%m-%d %I:%M:%S")
+  return datetime.strptime(time_str.split('.')[0], "%Y-%m-%d %H:%M:%S")
 
 def get_token(email, password):
   url = 'https://simple-note.appspot.com/api/login'
