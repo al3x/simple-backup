@@ -1,6 +1,2 @@
-- get it working
-- support exporting to plain text
-
-Fancy Features:
-- export to Evernote
 - export to HTML
+- refactor for clarity, maintainability

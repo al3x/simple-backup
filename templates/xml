@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notes>
+  {% for note in notes %}
+  <note>
+    <key>{{ note.key }}</key>
+    <created>{{ note.created|date:"Y-m-d\TH:i:s" }}</created>
+    <modified>{{ note.modified|date:"Y-m-d\TH:i:s" }}</modified>
+    <content>{{ note.content }}</content>
+  </note>
+  {% endfor %}
+</notes>

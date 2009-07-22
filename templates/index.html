@@ -1,30 +1,38 @@
 {% extends "layout.html" %}
 {% block content %}
-<p>
-  This application talks to the Simplenote API. It <strong>does not</strong> permanently store your credentials.
-</p>
 
-<form method="post" name="loginform" action="/auth">
-  <fieldset>
-    <legend>Enter your Simplenote credentials</legend>
+<div class="span-10">
+  <form method="post" name="loginform" action="/auth">
+    <fieldset>
+      <legend>Step 1: Enter your Simplenote credentials</legend>
 
-    {% if autherror %}
-      <div class="error">
-        There was a problem authenticating to the Simplenote API. Check your email and password and try again.
-      </div>
-    {% endif %}
+      {% if autherror %}
+        <div class="error">
+          There was a problem authenticating to the Simplenote API. Check your email and password and try again.
+        </div>
+      {% endif %}
 
-    <p>
-      <label for="email">Email</label><br />
-      <input type="text" class="text" id="email-input" name="email" />
-    </p>
-    <p>
-      <label for="password">Password</label><br />
-      <input type="password" class="text" id="password-input" name="password" />
-    </p>
-    <p>
-      <input type="submit" value="Submit" />
-    </p>
-  </fieldset>
-</form>
+      <p>
+        <label for="email">Email</label><br />
+        <input type="text" class="text" id="email-input" name="email" />
+      </p>
+      <p>
+        <label for="password">Password</label><br />
+        <input type="password" class="text" id="password-input" name="password" />
+      </p>
+      <p>
+        <input type="submit" value="Submit" />
+      </p>
+    </fieldset>
+  </form>
+</div>
+
+<div class="span-12 prepend-2 last">
+  <p>
+  Exports your Simplenote notes to plain text, CSV, JSON, XML, YAML, and Evernote archive formats. Two easy steps. Completely free.
+  </p>
+  <p class="quiet">
+    This application talks to directly the Simplenote API. It <strong>does not</strong> store your credentials. Want to be sure? Check out the <a href="https://github.com/al3x/simple-backup/tree">source code</a>.
+  </p>
+</div>
 {% endblock %}

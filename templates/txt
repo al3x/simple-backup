@@ -1,0 +1,6 @@
+{% for note in notes %}
+created: {{ note.created|date:"N d Y H:i:s" }}
+updated: {{ note.modified|date:"N d Y H:i:s" }}
+{{ note.content }}
+---
+{% endfor %}

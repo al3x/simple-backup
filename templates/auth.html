@@ -1,4 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
-  {{ body }}
+<p class="success">
+  Looking good! We found {{ note_count }} note{{ note_count|pluralize }}.
+  Just one more step and you're done.
+</p>
+
+<form method="post" name="export" action="/export">
+  <fieldset>
+    <legend>Step 2: Pick an export format</legend>
+
+    <p>
+      <label for="format">Select format</label><br />
+      <input type="radio" name="format" value="txt" /> Plain Text<br />
+      <input type="radio" name="format" value="csv" /> CSV<br />
+      <input type="radio" name="format" value="json" /> JSON<br />
+      <input type="radio" name="format" value="xml" /> XML<br />
+      <input type="radio" name="format" value="yaml" /> YAML<br />
+      <input type="radio" name="format" value="enex" /> Evernote<br />
+    </p>
+
+    <p>
+      <input type="submit" value="Export" /><br />
+      <div class="quiet">
+        Your backup will be downloaded when you click "Export".
+        Once you've got it, you're all set. Enjoy!
+      </div>
+    </p>
+  </fieldset>
+  <input type="hidden" name="token" value="{{ token }}" />
+  <input type="hidden" name="note_ids" value="{{ note_ids }}" />
+</form>
 {% endblock %}
