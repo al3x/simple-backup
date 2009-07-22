@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>
+  This application talks to the Simplenote API. It <strong>does not</strong> permanently store your credentials.
+</p>
+
+<form method="post" name="loginform" action="/auth">
+  <fieldset>
+    <legend>Enter your Simplenote credentials</legend>
+
+    {% if autherror %}
+      <div class="error">
+        There was a problem authenticating to the Simplenote API. Check your email and password and try again.
+      </div>
+    {% endif %}
+
+    <p>
+      <label for="email">Email</label><br />
+      <input type="text" class="text" id="email-input" name="email" />
+    </p>
+    <p>
+      <label for="password">Password</label><br />
+      <input type="password" class="text" id="password-input" name="password" />
+    </p>
+    <p>
+      <input type="submit" value="Submit" />
+    </p>
+  </fieldset>
+</form>
+{% endblock %}

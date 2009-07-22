@@ -1,0 +1,21 @@
+application: simple-backup
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon.ico
+
+- url: /css
+  static_dir: css
+
+- url: /images
+  static_dir: images
+
+- url: /javascripts
+  static_dir: javascripts
+
+- url: .*
+  script: main.py
