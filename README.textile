@@ -1,0 +1,17 @@
+h1. Simple Backup
+
+h2. Introduction
+
+Unofficial backup and export for "Simplenote":https://simple-note.appspot.com/. Talks to their API on behalf of users and exports notes into standard formats.
+
+h2. Installation
+
+This application is hosted on Google App Engine. Unless you want to run your own custom modification, it does not require installation.
+
+h2. Author
+
+"Alex Payne":http://al3x.net/.
+
+h2. License
+
+See LICENSE file.
