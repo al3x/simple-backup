@@ -1,2 +1,4 @@
 - export to HTML
 - refactor for clarity, maintainability
+- tests (eep, erk)
+- API: single-URL call, specifying output format, auth with Basic Auth to do backups
