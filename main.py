@@ -7,7 +7,6 @@ from django.utils import simplejson
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-
 class Auth(BetterHandler):
   def post(self):
     email = self.request.get('email')
@@ -15,9 +14,9 @@ class Auth(BetterHandler):
 
     try:
       token = Simplenote.get_token(email, password)
-    except Simplenote.AuthError:
+    except Simplenote.AuthError as ex:
       for_template = {
-        'autherror': True
+        'autherror': True,
       }
       return self.response.out.write(template.render(self.template_path('index.html'),
                                                      for_template))
@@ -36,7 +35,6 @@ class Auth(BetterHandler):
       }
       return self.response.out.write(template.render(self.template_path('auth.html'),
                                                      for_template))
-
 
 class Export(BetterHandler):
   def txt(self, notes):

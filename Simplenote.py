@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import base64, urllib
+import base64, logging, urllib
 
 from datetime import datetime
 from google.appengine.api import urlfetch
@@ -36,6 +36,7 @@ def get_token(email, password):
   if (result.status_code == 200):
     return result.content.strip()
   else:
+    logging.error("Error getting token: %d %s" % (result.status_code, result.content))
     raise AuthError(email, "Could not authenticate or bad response from server.")
 
 def index(token):
