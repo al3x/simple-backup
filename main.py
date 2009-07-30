@@ -14,7 +14,7 @@ class Auth(BetterHandler):
 
     try:
       token = Simplenote.get_token(email, password)
-    except Simplenote.AuthError as ex:
+    except Simplenote.AuthError:
       for_template = {
         'autherror': True,
       }
