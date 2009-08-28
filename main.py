@@ -21,7 +21,7 @@ class Auth(BetterHandler):
       return self.response.out.write(template.render(self.template_path('index.html'),
                                                      for_template))
     else:
-      index = Simplenote.index(token)
+      index = Simplenote.index(token, email)
       note_ids = []
 
       for note in index:
@@ -31,6 +31,7 @@ class Auth(BetterHandler):
       for_template = {
         'note_count': len(index),
         'token': token,
+        'email': email,
         'note_ids': ','.join(note_ids),
       }
       return self.response.out.write(template.render(self.template_path('auth.html'),
@@ -123,13 +124,14 @@ class Export(BetterHandler):
 
   def post(self):
     token = self.request.get('token')
+    email = self.request.get('email')
     format = self.request.get('format')
     note_ids = self.request.get('note_ids').split(',')
 
     notes = []
 
     for key in note_ids:
-      note = Simplenote.get_note(key, token)
+      note = Simplenote.get_note(key, token, email)
       notes.append(note)
 
     for_template = {
