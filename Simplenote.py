@@ -91,8 +91,7 @@ def update_note(key, note_body, token, email):
   result = urlfetch.fetch(url=url,
                           method=urlfetch.POST,
                           payload=payload)
-  note = simplejson.loads(result.content)
-
+  
   if (result.status_code == 200):
     return result.content.strip()
   else:
@@ -105,7 +104,6 @@ def create_note(note_body, token, email):
   result = urlfetch.fetch(url=url,
                           method=urlfetch.POST,
                           payload=payload)
-  note = simplejson.loads(result.content)
 
   if (result.status_code == 200):
     return result.content.strip()
@@ -116,7 +114,6 @@ def delete_note(key, token, email):
   url = "https://simple-note.appspot.com/api/delete?key=%s&auth=%s&email=%s" % (key, token, email)
   result = urlfetch.fetch(url=url,
                           method=urlfetch.GET)
-  note = simplejson.loads(result.content)
 
   if (result.status_code == 200):
     return True
