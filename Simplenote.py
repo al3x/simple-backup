@@ -39,6 +39,7 @@ def get_token(email, password):
     'email': email,
     'password': password
   }
+
   payload = base64.b64encode(urllib.urlencode(form_fields))
 
   result = urlfetch.fetch(url=url,
@@ -53,6 +54,7 @@ def get_token(email, password):
     raise AuthError(email, "Could not authenticate or bad response from server.")
 
 def index(token, email):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/index?auth=%s&email=%s" % (token, email)
   result = urlfetch.fetch(url=url,
                           method=urlfetch.GET)
@@ -69,6 +71,7 @@ def index(token, email):
     raise ApiError('/index', "Exception retrieving notes from index.")
 
 def search(query, token, email, max_results=10, offset_index=0):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/search?query=%s&results=%s&offset=%sauth=%s&email=%s" % (query, max_results, offset_index, token, email)
   result = urlfetch.fetch(url=url,
                           method=urlfetch.GET)
@@ -80,6 +83,7 @@ def search(query, token, email, max_results=10, offset_index=0):
     raise ApiError('/search', "Exception searching notes for '%s'" % query)
 
 def get_note(key, token, email):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/note?key=%s&auth=%s&email=%s" % (key, token, email)
   result = urlfetch.fetch(url=url,
                           method=urlfetch.GET)
@@ -99,6 +103,7 @@ def get_note(key, token, email):
 # also supports setting date modified; date format is not documented,
 # is presumed to be GMT
 def update_note(key, note_body, token, email):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/note?key=%s&auth=%s&email=%s" % (key, token, email)
   payload = base64.b64encode(unicode(note_body))
 
@@ -112,6 +117,7 @@ def update_note(key, note_body, token, email):
     raise ApiError('/note', "Exception updating note with key '%s'" % key)
 
 def create_note(note_body, token, email):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/note?auth=%s&email=%s" % (token, email)
   payload = base64.b64encode(unicode(note_body))
 
@@ -125,6 +131,7 @@ def create_note(note_body, token, email):
     raise ApiError('/note', 'Exception creating note.')
 
 def delete_note(key, token, email):
+  email = email.replace("+", "%2B")
   url = "https://simple-note.appspot.com/api/delete?key=%s&auth=%s&email=%s" % (key, token, email)
   result = urlfetch.fetch(url=url,
                           method=urlfetch.GET)
