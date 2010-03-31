@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import csv, Simplenote, StringIO, wsgiref.handlers, yaml
+import csv, logging, Simplenote, StringIO, wsgiref.handlers, yaml
 
 from betterhandler import *
 from django.utils import simplejson
@@ -24,16 +24,21 @@ class Auth(BetterHandler):
       index = Simplenote.index(token, email)
       note_ids = []
 
+      logging.info("index of all notes: '%s'" % index)
+
       for note in index:
         if note['deleted'] == False:
           note_ids.append(note['key'])
 
+      logging.info("note_ids minus deleted notes: '%s'" % note_ids)
+
       for_template = {
-        'note_count': len(index),
+        'note_count': len(note_ids),
         'token': token,
         'email': email,
         'note_ids': ','.join(note_ids),
       }
+
       return self.response.out.write(template.render(self.template_path('auth.html'),
                                                      for_template))
 
@@ -138,6 +143,8 @@ class Export(BetterHandler):
       'notes': notes
     }
 
+    logging.info("Found notes: '%s'" % notes)
+
     if format == 'txt':
       self.txt(notes)
     elif format == 'csv':
@@ -158,10 +165,13 @@ class FrontPage(BetterHandler):
 
 
 def main():
+  logging.getLogger().setLevel(logging.INFO)
+
   application = webapp.WSGIApplication([('/', FrontPage),
                                         ('/auth', Auth),
                                         ('/export', Export)],
                                        debug=True)
+
   wsgiref.handlers.CGIHandler().run(application)
 
 

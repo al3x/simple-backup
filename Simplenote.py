@@ -6,15 +6,28 @@ from datetime import datetime
 from google.appengine.api import urlfetch
 from django.utils import simplejson
 
-class AuthError(Exception):
+
+class MyException(Exception):
+  def _get_message(self, message):
+      return self._message
+
+  def _set_message(self, message):
+      self._message = message
+
+  message = property(_get_message, _set_message)
+
+
+class AuthError(MyException):
   def __init__(self, email, message):
     self.email = email
     self.message = message
 
-class ApiError(Exception):
+
+class ApiError(MyException):
   def __init__(self, method, message):
     self.method = method
     self.message = message
+
 
 def mkdatetime(time_str):
   return datetime.strptime(time_str.split('.')[0], "%Y-%m-%d %H:%M:%S")
@@ -80,6 +93,7 @@ def get_note(key, token, email):
     }
     return note
   else:
+    logging.error("Bad key: '%s'" % key)
     raise ApiError('/note', "Exception retrieving note with key '%s'" % key)
 
 # also supports setting date modified; date format is not documented,
@@ -91,7 +105,7 @@ def update_note(key, note_body, token, email):
   result = urlfetch.fetch(url=url,
                           method=urlfetch.POST,
                           payload=payload)
-  
+
   if (result.status_code == 200):
     return result.content.strip()
   else:
